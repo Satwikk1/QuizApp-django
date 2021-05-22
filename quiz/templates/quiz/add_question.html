@@ -1,0 +1,74 @@
+{% extends 'quiz/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<div class="container mb-5 mt-2">
+		<div class="card mt-5 mb-5 text-center">
+			<div class="card-header">
+				<legend>{{ quiz.title }}</legend>
+			</div>
+			<div class="card-body">
+				{{ quiz.topic }}  ({{ quiz.difficulty }})
+				<br>
+				quiz time: {{ quiz.time }}
+				<br>
+				required score to pass: {{ quiz.required_score_to_pass }}
+				<br>
+				current total number of questions: {{ quiz.get_question_count }}
+			</div>
+		</div>
+
+
+		{% for question in quiz.question_set.all %}
+			<div class="card mt-5 mb-5">
+				<div class="card-header">
+					{{ question.text }}
+				</div>
+				<div class="card-body">
+					{% for option in question.answer_set.all %}
+						<h5>{{ option.text }}</h5>
+						<h5>correct answer: {{ option.correct }}</h5>
+						<br>
+					{% endfor %}
+				</div>
+			</div>
+		{% endfor %}
+
+		<form method="POST">
+			{% csrf_token %}
+			<div class="container">
+				<br>
+				<hr>
+
+				<!-- {% if messages %}
+		            {% for message in messages %}
+		                <div class="alert alert-{{ message.tags }}">
+		                    {{message}}
+		                </div>
+		            {% endfor %}
+		        {% endif %} -->
+
+				<div class="container mt-5">
+					<legend>Question detail</legend>
+					{{ question_form|crispy }}
+					{{ answer_form|crispy }}
+				</div>
+
+				<div class="row">
+					<div class="col-md-8">
+						<button class="btn btn-outline-info" type="submit">Add another question</button>
+					</div>
+					<div class="text-right col-md-4">
+						<button class="btn btn-success" type="submit" name="create_quiz_save_btn">Save</button>
+						<button class="btn btn-secondary"><a class="text-light" href="{% url 'quiz-home' %}">Cancel</a></button>
+					</div>
+				</div>
+				
+
+			</div>
+		</form>
+	</div>
+{% endblock content %}
+
+
+

@@ -1,0 +1,39 @@
+{% extends 'quiz/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<div class="container mb-5 mt-2">
+		<form method="POST">
+			{% csrf_token %}
+			<div class="container">
+				
+				<div class="container">
+					<legend>Enter quiz details</legend>
+					{{ quiz_form|crispy }}
+				</div>
+				<br>
+				<hr>
+				<div class="container mt-5">
+					<legend>Question detail</legend>
+					{{ question_form|crispy }}
+					{{ answer_form|crispy }}
+				</div>
+
+				<div class="row">
+					<div class="col-md-8">
+						<button class="btn btn-outline-info" type="submit">Add another question</button>
+					</div>
+					<div class="text-right col-md-4">
+						<button class="btn btn-success" type="submit" name="create_quiz_save_btn">Save</button>
+						<button class="btn btn-secondary"><a class="text-light" href="{% url 'quiz-home' %}">Cancel</a></button>
+					</div>
+				</div>
+				
+
+			</div>
+		</form>
+	</div>
+{% endblock content %}
+
+
+

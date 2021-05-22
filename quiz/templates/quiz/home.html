@@ -1,0 +1,18 @@
+{% extends 'quiz/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<div class="container">
+		{% for quiz in quizes %}
+			<div class="card mt-5 mb-5">
+			  <div class="card-body">
+			    <h5 class="card-title">{{ quiz.title }}</h5>
+			    <p class="card-text">{{ quiz.topic }} ({{ quiz.difficulty }})</p>
+			    <p class="card-text">Total questions: {{ quiz.get_question_count }}</p>
+			    <a href="{% url 'quiz_attempt' quiz.id %}" class="btn btn-outline-primary">Attempt</a>
+			  </div>
+			</div>
+		{% endfor %}
+	</div>
+	
+{% endblock content %}

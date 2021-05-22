@@ -1,0 +1,13 @@
+{% extends 'quiz/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	
+	<div>
+		<div class="container mt-5">
+			<h3>Logout is successful.</h3>
+			<a class="text-muted" href="{% url 'users_login' %}">Sign In again.</a>
+		</div>
+	</div>
+
+{% endblock content %}

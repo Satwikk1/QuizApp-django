@@ -1,0 +1,41 @@
+{% extends 'quiz/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<div class="container">
+		<div class="card mt-5 mb-5 text-center">
+			<div class="card-header">
+				<legend>{{ quiz.title }}</legend>
+			</div>
+			<div class="card-body">
+				{{ quiz.topic }}  ({{ quiz.difficulty }})
+				<br>
+				quiz time: {{ quiz.time }}
+				<br>
+				required score to pass: {{ quiz.required_score_to_pass }}
+				<br>
+				current total number of questions: {{ quiz.get_question_count }}
+			</div>
+		</div>
+
+
+		{% for question in quiz.question_set.all %}
+			<div class="card mt-5 mb-5">
+				<div class="card-header">
+					{{ question.text }}
+				</div>
+				<div class="card-body">
+					{% for option in question.answer_set.all %}
+						<h5>{{ option.text }}</h5>
+						<h5>correct answer: {{ option.correct }}</h5>
+						<br>
+					{% endfor %}
+				</div>
+			</div>
+		{% endfor %}
+		<div class="container mb-5 mt-1 text-right">
+			<button class="btn btn-info"><a class="text-light" href="{% url 'add_more_question' quiz.id %}">Add more question</a></button>
+		</div>
+	</div>
+	
+{% endblock content %}
